@@ -5,6 +5,7 @@ import com.curso.domains.enums.Disponibilidade;
 import com.curso.domains.enums.Validade;
 import com.curso.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class DBService {
+public class DBService implements CommandLineRunner {
 
     @Autowired
     private FornecedorRepository fornecedorRepo;
@@ -32,8 +33,7 @@ public class DBService {
     @Autowired
     private ServiceOrderRepository serviceOrderRepository;
 
-    public void initDB(){
-
+    public void initDB() {
         // Populando Fornecedores e Laboratórios
         Fornecedor fornecedor01 = new Fornecedor(null, "Farmacia São João", "08658785000279");
         Fornecedor fornecedor02 = new Fornecedor(null, "Drogaria São Paulo", "89.158.7980003-03");
@@ -61,5 +61,10 @@ public class DBService {
         technicianRepository.save(t1);
         userRepository.save(u1);
         serviceOrderRepository.saveAll(List.of(os1, os2));
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        initDB(); // Executa ao iniciar o projeto
     }
 }
